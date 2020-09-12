@@ -12,16 +12,18 @@ require __DIR__ . '/vendor/autoload.php';
 
 $arguments = $_SERVER['argv'];
 $handle    = popen('sudo rtl_fm -f 169.65M -M fm -s 22050 -p 25 | multimon-ng -a FLEX -t raw /dev/stdin', 'r');
-$client    = new GuzzleHttp\Client();
 
 echo $arguments[1];
 
 while(!feof($handle)) {
   $read = fread($handle, 2096);
   $data = [
-    'message' => $read
+    'form_params' => [
+      'message' => $read
+    ]
   ];
   try {
+    $client    = new GuzzleHttp\Client();
     $client->request('POST', $arguments[1], $data);
   } catch (\GuzzleHttp\Exception\GuzzleException $e) {
     echo "\e[101m Error: ".$e->getMessage() . "\e[49m";
