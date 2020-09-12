@@ -1,0 +1,8 @@
+{
+  "name": "jstwl/p2000-to-api",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
